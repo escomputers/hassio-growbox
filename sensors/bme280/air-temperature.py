@@ -4,7 +4,6 @@ import threading
 import board
 from adafruit_bme280 import basic as adafruit_bme280
 import syslog
-import datetime
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
@@ -19,7 +18,7 @@ def sensing():
     # GET & SEND AIR TEMPERATURE
     air_temperature = str(("%.2f" % round(bme280.temperature, 2)))
     try:
-        requests.post('http://localhost:8123/api/states/sensor.air_temperature', headers={
+        response = requests.post('http://localhost:8123/api/states/sensor.air_temperature', headers={
             'Authorization': 'Bearer ' + LLA_TOKEN,
             'Content-Type': 'application/json'
         }, json={
@@ -28,8 +27,8 @@ def sensing():
                 'unit_of_measurement': '°C'
             }
         })
-    except ConnectionError:
-        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        syslog.syslog(syslog.LOG_WARNING, '[' + timestamp + ']' + '[WARNING HASSIO REST API for BME280-AIRTEMP] Cannot send sensor data to Home Assistant REST endpoint.')
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        syslog.syslog(syslog.LOG_WARNING, str(e))
 
 sensing()
