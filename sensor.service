@@ -1,0 +1,15 @@
+[Unit]
+Description=Air Temperature
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python /root/hassio-growbox/sensors/bme280/air-temperature.py
+WorkingDirectory=/root/hassio-growbox/sensors/bme280
+Environment=PYTHONPATH=/root/hassio-growbox/env/lib/python3.9/site-packages
+Restart=on-failure
+EnvironmentFile=/etc/environment
+#StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target
