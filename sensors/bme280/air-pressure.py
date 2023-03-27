@@ -8,7 +8,7 @@ import syslog
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
-LLA_TOKEN = os.getenv("TOKEN")
+LLA_TOKEN = os.environ.get('TOKEN')
 
 i2c = board.I2C() 
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
