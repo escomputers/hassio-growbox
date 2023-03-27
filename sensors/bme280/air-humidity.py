@@ -1,9 +1,10 @@
 import os
 import requests
-import threading
+import fcntl
 import board
 from adafruit_bme280 import basic as adafruit_bme280
 import syslog
+
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
@@ -12,8 +13,13 @@ LLA_TOKEN = os.getenv("TOKEN")
 i2c = board.I2C() 
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
+# Create a lock file
+lock_file = open('/tmp/lockfile.lock', 'w')
+
+
 def sensing():
-    threading.Timer(30.0, sensing).start()
+    # Acquire a lock on the lock file
+    fcntl.flock(lock_file, fcntl.LOCK_EX)
 
     # GET & SEND AIR HUMIDITY
     air_humidity = str(("%.2f" % round(bme280.humidity, 2)))
@@ -30,5 +36,8 @@ def sensing():
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         syslog.syslog(syslog.LOG_WARNING, str(e))
+    finally:
+        # Release the lock on the lock file
+        fcntl.flock(lock_file, fcntl.LOCK_UN)
 
 sensing()
