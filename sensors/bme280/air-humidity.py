@@ -14,7 +14,7 @@ i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
 # Create a lock file
-lock_file = open('/tmp/lockfile.lock', 'w')
+lock_file = open('../lockfile.lock', 'w')
 
 
 def sensing():

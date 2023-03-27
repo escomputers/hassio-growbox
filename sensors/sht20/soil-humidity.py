@@ -12,7 +12,7 @@ LLA_TOKEN = os.getenv("TOKEN")
 sht = SHT20(1, 0x40)
 
 # Create a lock file
-lock_file = open('/tmp/lockfile.lock', 'w')
+lock_file = open('../lockfile.lock', 'w')
 
 
 def sensing():
