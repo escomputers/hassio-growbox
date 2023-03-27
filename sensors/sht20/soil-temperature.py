@@ -1,8 +1,9 @@
 import os
 import requests
-import threading
+import fcntl
 from sensor import SHT20
 import syslog
+
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
@@ -10,8 +11,13 @@ LLA_TOKEN = os.getenv("TOKEN")
 
 sht = SHT20(1, 0x40)
 
+# Create a lock file
+lock_file = open('/tmp/lockfile.lock', 'w')
+
+
 def sensing():
-    threading.Timer(30.0, sensing).start()
+    # Acquire a lock on the lock file
+    fcntl.flock(lock_file, fcntl.LOCK_EX)
 
     # GET & SEND SOIL TEMPERATURE
     t = sht.temperature()
@@ -29,5 +35,9 @@ def sensing():
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         syslog.syslog(syslog.LOG_WARNING, str(e))
+    finally:
+        # Release the lock on the lock file
+        fcntl.flock(lock_file, fcntl.LOCK_UN)
+
 
 sensing()
