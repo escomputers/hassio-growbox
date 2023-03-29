@@ -8,7 +8,7 @@ import syslog
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
-LLA_TOKEN = os.environ.get('TOKEN')
+LLA_TOKEN = os.getenv('TOKEN')
 
 i2c = board.I2C() 
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
@@ -22,7 +22,7 @@ def sensing():
     fcntl.flock(lock_file, fcntl.LOCK_EX)
 
     # GET & SEND AIR TEMPERATURE
-    air_temperature = str(("%.2f" % round(bme280.temperature, 2)))
+    air_temperature = str(round(bme280.temperature, 2))
     try:
         response = requests.post('http://localhost:8123/api/states/sensor.air_temperature', headers={
             'Authorization': 'Bearer ' + LLA_TOKEN,

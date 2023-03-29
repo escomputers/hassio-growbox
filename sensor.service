@@ -4,9 +4,10 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/usr/bin/bash /root/hassio-growbox/sensors/threadsManager.sh
+#ExecStartPre=/bin/bash -c 'source /etc/environment'
+ExecStart=python /root/hassio-growbox/sensors/threadManager.py
 WorkingDirectory=/root/hassio-growbox/sensors
-#Environment=PYTHONPATH=/root/hassio-growbox/env/lib/python3.9/site-packages
+Environment=PYTHONPATH=/root/hassio-growbox/env/lib/python3.9/site-packages
 Restart=on-failure
 EnvironmentFile=/etc/environment
 #StartLimitIntervalSec=0

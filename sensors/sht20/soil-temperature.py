@@ -7,7 +7,7 @@ import syslog
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
-LLA_TOKEN = os.environ.get('TOKEN')
+LLA_TOKEN = os.getenv('TOKEN')
 
 sht = SHT20(1, 0x40)
 
