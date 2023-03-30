@@ -18,12 +18,3 @@ http:
   trusted_proxies:
     - 172.30.33.0/24
     - 172.18.0.0/24
-
-sensor:
-  - platform: rest
-    name: air_temperature
-    resource: http://localhost:8123/api/states/sensor.air_temperature
-    value_template: '{{ value_json.state }}'
-    headers:
-      Authorization: Bearer YOUR_LONG_LIVED_ACCESS_TOKEN
-    scan_interval: 60

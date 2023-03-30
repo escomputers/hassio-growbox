@@ -3,7 +3,7 @@ import requests
 import fcntl
 from sensor import SHT20
 import syslog
-
+import time
 
 syslog.openlog(facility=syslog.LOG_LOCAL0)
 
@@ -19,20 +19,30 @@ def sensing():
     # Acquire a lock on the lock file
     fcntl.flock(lock_file, fcntl.LOCK_EX)
 
-    # GET & SEND SOIL TEMPERATURE
+    # GET VALUES
     t = sht.temperature()
-    soil_temperature = str(("%.2f" % round(t.C, 2)))
+    soil_temperature = str(round(t.C, 2))
+
+    h = sht.humidity()
+    soil_humidity = str(round(h.RH, 2))
+
+    # SEND VALUES
+    header = {'Authorization': 'Bearer ' + LLA_TOKEN, 'Content-Type': 'application/json'}
     try:
-        response = requests.post('http://localhost:8123/api/states/sensor.soil_temperature', headers={
-            'Authorization': 'Bearer ' + LLA_TOKEN,
-            'Content-Type': 'application/json'
-        }, json={
+        requests.post('http://localhost:8123/api/states/sensor.soil_temperature', headers=header, json={
             'state': soil_temperature,
             'attributes': {
                 'unit_of_measurement': '°C'
             }
         })
-        response.raise_for_status()
+        time.sleep(5)
+        requests.post('http://localhost:8123/api/states/sensor.soil_humidity', headers=header, json={
+            'state': soil_humidity,
+            'attributes': {
+                'unit_of_measurement': '%'
+            }
+        })
+        #response.raise_for_status()
     except requests.exceptions.RequestException as e:
         syslog.syslog(syslog.LOG_WARNING, str(e))
     finally:
