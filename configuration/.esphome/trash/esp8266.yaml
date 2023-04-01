@@ -1,0 +1,29 @@
+esphome:
+  name: esp8266
+  friendly_name: esp8266
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "xPPSAA2m024DWluj6DIPpccl6ShHGHDn1/NaQDNFcyc="
+
+ota:
+  password: "071786482ace1341911ddb2a35f935cc"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp8266 Fallback Hotspot"
+    password: "YNHv3qOPY4wW"
+
+captive_portal:
+    
