@@ -1,5 +1,11 @@
 esphome:
   name: esp-growbox
+  libraries:
+    - "Wire"
+    - "uFire SHT20"
+    - "ArduinoJson"
+  includes:
+    - sht20.h
 
 esp8266:
   board: esp12e
@@ -23,6 +29,11 @@ wifi:
     ssid: !secret fallback_wifi_ssid
     password: !secret fallback_wifi_password
 
+i2c:
+  sda: GPIO4
+  scl: GPIO5
+  # scan: true
+
 uart:
   rx_pin: GPIO3
   tx_pin: GPIO1
@@ -36,6 +47,38 @@ sensor:
       name: "MH-Z19 Temperature"
     update_interval: 60s
     automatic_baseline_calibration: false
+  - platform: bme280
+    temperature:
+      name: "Air Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Air Pressure"
+    humidity:
+      name: "Air Humidity"
+    address: 0x77
+    update_interval: 60s
+  - platform: custom
+    lambda: |-
+      auto sht20 = new SHT20();
+      App.register_component(sht20);
+      return {sht20->temperature_sensor, sht20->humidity_sensor, sht20->vpd_sensor, sht20->dew_point_sensor};
+    sensors:
+      - name: "Soil Temperature"
+        id: sensor_soil_temperature
+        unit_of_measurement: °C
+        accuracy_decimals: 2
+      - name: "Soil Humidity"
+        id: sensor_soil_humidity
+        unit_of_measurement: "%"
+        accuracy_decimals: 2
+      - name: "Soil Vapour-pressure deficit"
+        id: sensor_vpd
+        unit_of_measurement: "kPa"
+        accuracy_decimals: 2
+      - name: "Soil Dew point"
+        id: sensor_soil_dew_point
+        unit_of_measurement: °C
+        accuracy_decimals: 2
 
 captive_portal:
     
