@@ -1,9 +1,1 @@
-requests
-
-#bme280
-adafruit-circuitpython-bme280
-
-#sht20
-sensor
-smbus
-spidev
+esphome
