@@ -1,6 +1,3 @@
-Home Assistant as growbox controller on a Raspberry Pi 4 2GB, using several different devices and sensors, connected via ESPHome (esp8266-12-e)
-
-
 ## Home Assistant setup
 
 1. Install Home Assistant as container
