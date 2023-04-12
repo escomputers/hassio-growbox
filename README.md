@@ -125,4 +125,4 @@ TODO
 
 ## 3D CASES
 
-TODO
+- Raspberry Pi 4 case (40mm fan) by John_Sinclair on Thingiverse: https://www.thingiverse.com/thing:3723481
