@@ -126,3 +126,4 @@ TODO
 ## 3D CASES
 
 - Raspberry Pi 4 case (40mm fan) by John_Sinclair on Thingiverse: https://www.thingiverse.com/thing:3723481
+- 12V USB 8 Channel relay board by polysquare on Thingverse: https://www.thingiverse.com/thing:2306082
