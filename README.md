@@ -120,8 +120,7 @@ Denkovi USB 8CH relay board
 | Raspberry Pi 4                    | 5V 2A|
 
 ## WIRINGS
-
-TODO
+[USB 8CH RELAY BOARD](https://github.com/escomputers/hassio-growbox/blob/c1292adcfdd527b001ce2a75a09739360a721af4/3D/usb-8ch-relay-board/12V-USB-8CH-RELAY-BOARD-WIRING.pdf)
 
 ## 3D CASES
 
