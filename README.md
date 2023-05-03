@@ -129,6 +129,7 @@ In this case, the relay board is controlled by a jar file but it can be adapted 
 
 ## WIRINGS
 [USB 8CH relay board](https://github.com/escomputers/hassio-growbox/blob/325ab9b5c127c14f19560fe0ca1c8efceda2f83e/wirings/12V-USB-8CH-relay-board-wiring.pdf)
+
 [D1-MINI/ESP8266 sensors](https://github.com/escomputers/hassio-growbox/blob/325ab9b5c127c14f19560fe0ca1c8efceda2f83e/wirings/d1mini-esp8266-sensors-wiring.pdf)
 
 ## 3D CASES
