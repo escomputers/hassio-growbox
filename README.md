@@ -128,7 +128,8 @@ In this case, the relay board is controlled by a jar file but it can be adapted 
 | Power sockets                     | 220V 16A (1,5mm<sup>2</sup> cables)|
 
 ## WIRINGS
-[USB 8CH RELAY BOARD](https://github.com/escomputers/hassio-growbox/blob/c1292adcfdd527b001ce2a75a09739360a721af4/3D/usb-8ch-relay-board/12V-USB-8CH-RELAY-BOARD-WIRING.pdf)
+[USB 8CH relay board](https://github.com/escomputers/hassio-growbox/blob/c1292adcfdd527b001ce2a75a09739360a721af4/3D/usb-8ch-relay-board/12V-USB-8CH-RELAY-BOARD-WIRING.pdf)
+[D1-MINI/ESP8266 sensors]()
 
 ## 3D CASES
 
