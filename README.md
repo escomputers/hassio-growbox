@@ -111,11 +111,15 @@ Denkovi USB 8CH relay board
 | ----------- | ---------- |
 | USB-B       | USB           |
 
-Home Assistant `configuration.yaml` contains configuration for controlling USB relay board, 
+## HOME ASSISTANT CONFIGURATION
+
+Home Assistant `homeassistant-configuration/configuration.yaml` contains configuration for controlling USB relay board, 
 using [RESTful Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.rest).
 To get it working, an API service must be started within raspbian OS.
 Here's the repo: [usbAPI](https://github.com/escomputers/usbAPI)
 In this case, the relay board is controlled by a jar file but it can be adapted to any other board by editing the commands to run.
+
+While `homeassistant-configuration/scripts.yaml` contains entities for controlling previously created API relays.
 
 ## POWER
 

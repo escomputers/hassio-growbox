@@ -1,0 +1,216 @@
+usbrelay1_control:
+  alias: usbrelay1_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay1
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay1_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay1 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay1
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay1_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay1 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay2_control:
+  alias: usbrelay2_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay2
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay2_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay2 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay2
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay2_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay2 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay3_control:
+  alias: usbrelay3_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay3
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay3_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay3 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay3
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay3_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay3 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay4_control:
+  alias: usbrelay4_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay4
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay4_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay4 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay4
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay4_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay4 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay5_control:
+  alias: usbrelay5_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay5
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay5_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay5 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay5
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay5_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay5 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay6_control:
+  alias: usbrelay6_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay6
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay6_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay6 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay6
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay6_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay6 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay7_control:
+  alias: usbrelay7_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay7
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay7_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay7 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay7
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay7_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay7 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
+usbrelay8_control:
+  alias: usbrelay8_control
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay8
+      state: 'off'
+    then:
+    - service: rest_command.usbrelay8_on
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay8 ON
+        title: Growbox Notify
+  - if:
+    - condition: state
+      entity_id: binary_sensor.usbrelay8
+      state: 'on'
+    then:
+    - service: rest_command.usbrelay8_off
+      data: {}
+    - service: notify.mobile_app_s62_pro
+      data:
+        message: usbrelay8 OFF
+        title: Growbox Notify
+  mode: single
+  icon: mdi:light-switch
