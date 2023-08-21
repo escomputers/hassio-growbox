@@ -1,13 +1,14 @@
 version: '3'
 services:
   homeassistant:
-    container_name: homeassistant
+    container_name: homeassistant-2023-6
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
       - /opt/config
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
+    network_mode: host
     ports:
     - "8123:8123"
     - "5683:5683"
