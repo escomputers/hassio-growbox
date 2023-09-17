@@ -6,7 +6,7 @@
 docker compose up -d
 ```
 
-If you need Docker run for Raspbian/Debian/Ubuntu distros:
+If you need Docker run for RaspiOS:
 
 ```
 sudo bash utils/install-docker.sh
