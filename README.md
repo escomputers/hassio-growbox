@@ -53,21 +53,20 @@ python -m pip -r requirements.txt
 mv esphome-configuration/secrets.yaml esphome-configuration/sht20.h .esphome
 ```
 
-8. The first time you flash esp8266, you need to tell esphome some information about
+8. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
 your esp8266 device. Right after that, it will validate the configuration, create a binary, upload it, and start logs
 
 ```
 cd .esphome && esphome wizard esphome-config.yaml
 ```
 
-Next time you'll flash it, you just need to run:
+Next time you need to configure it, just connect to the same esp8266 network and launch commands over the air:
 
 ```
 esphome run esphome-configuration/esphome-config.yaml
 ```
 
-9. Take note of the ip address printed out in the logs after you run previous command
-Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
+9. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
 
 
 ## Sensors

@@ -39,6 +39,11 @@ uart:
   tx_pin: GPIO1
   baud_rate: 9600
 
+output:
+  - platform: esp8266_pwm
+    pin: GPIO15
+    id: pwm_output
+
 sensor:
   - platform: mhz19
     co2:
