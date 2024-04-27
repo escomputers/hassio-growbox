@@ -43,6 +43,12 @@ output:
   - platform: esp8266_pwm
     pin: GPIO15
     id: pwm_output
+    inverted: true
+
+fan:
+  - platform: speed
+    output: pwm_output
+    name: "Inline Fan"
 
 sensor:
   - platform: mhz19
@@ -52,15 +58,15 @@ sensor:
       name: "MH-Z19 Temperature"
     update_interval: 60s
     automatic_baseline_calibration: false
-  - platform: dht
-    pin: GPIO4
-    model: AM2302
-    temperature:
-      name: "Air temperature"
-    humidity:
-      name: "Air humidity"
-      accuracy_decimals: 2
-    update_interval: 60s
+  # - platform: dht
+  #   pin: GPIO4
+  #   model: AM2302
+  #   temperature:
+  #     name: "Air temperature"
+  #   humidity:
+  #     name: "Air humidity"
+  #     accuracy_decimals: 2
+  #   update_interval: 60s
   #   update_interval: 60s
   # - platform: bme280
   #   temperature:
@@ -96,4 +102,3 @@ sensor:
         accuracy_decimals: 2
 
 captive_portal:
-    
