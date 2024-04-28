@@ -29,10 +29,10 @@ wifi:
     ssid: !secret fallback_wifi_ssid
     password: !secret fallback_wifi_password
 
-# i2c:
-#   sda: GPIO4
-#   scl: GPIO5
-#   scan: true
+i2c:
+  sda: GPIO4
+  scl: GPIO5
+  scan: true
 
 uart:
   rx_pin: GPIO3
@@ -58,26 +58,25 @@ sensor:
       name: "MH-Z19 Temperature"
     update_interval: 60s
     automatic_baseline_calibration: false
-  # - platform: dht
-  #   pin: GPIO4
-  #   model: AM2302
-  #   temperature:
-  #     name: "Air temperature"
-  #   humidity:
-  #     name: "Air humidity"
-  #     accuracy_decimals: 2
-  #   update_interval: 60s
-  #   update_interval: 60s
-  # - platform: bme280
-  #   temperature:
-  #     name: "Air Temperature"
-  #     oversampling: 16x
-  #   pressure:
-  #     name: "Air Pressure"
-  #   humidity:
-  #     name: "Air Humidity"
-  #   address: 0x77
-  #   update_interval: 60s
+  - platform: dht
+    pin: GPIO4
+    model: AM2302
+    temperature:
+      name: "Air temperature"
+    humidity:
+      name: "Air humidity"
+      accuracy_decimals: 2
+    update_interval: 60s
+  - platform: bme280
+    temperature:
+      name: "Air Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Air Pressure"
+    humidity:
+      name: "Air Humidity"
+    address: 0x77
+    update_interval: 60s
   - platform: custom
     lambda: |-
       auto sht20 = new SHT20();

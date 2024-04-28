@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace",
+  "data": {
+    "config": {
+      "title": "Growbox",
+      "views": [
+        {
+          "title": "HOME",
+          "path": "home",
+          "icon": "mdi:pine-tree",
+          "badges": [],
+          "cards": [
+            {
+              "entity": "sensor.air_temperature",
+              "type": "sensor",
+              "graph": "line",
+              "detail": 2
+            },
+            {
+              "entity": "sensor.soil_temperature",
+              "type": "sensor",
+              "graph": "line",
+              "detail": 2
+            },
+            {
+              "entity": "sensor.air_humidity",
+              "type": "sensor",
+              "graph": "line",
+              "detail": 2
+            },
+            {
+              "entity": "sensor.co2",
+              "type": "sensor",
+              "graph": "line",
+              "detail": 2
+            },
+            {
+              "entity": "sensor.soil_humidity",
+              "type": "sensor",
+              "graph": "line",
+              "detail": 2
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "sensor.air_pressure",
+                "sensor.soil_dew_point",
+                "sensor.soil_vapour_pressure_deficit"
+              ]
+            },
+            {
+              "show_current": true,
+              "show_forecast": true,
+              "type": "weather-forecast",
+              "entity": "weather.forecast_growbox",
+              "forecast_type": "legacy"
+            },
+            {
+              "type": "tile",
+              "entity": "fan.inline_fan_2",
+              "features": [
+                {
+                  "type": "fan-speed"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.usbrelay1",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay2",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay3",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay4",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay5",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay6",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay7",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "binary_sensor.usbrelay8",
+                  "secondary_info": "last-updated"
+                }
+              ],
+              "title": "Devices status",
+              "state_color": true
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "script.usbrelay1_control"
+                },
+                {
+                  "entity": "script.usbrelay2_control"
+                },
+                {
+                  "entity": "script.usbrelay3_control"
+                },
+                {
+                  "entity": "script.usbrelay4_control"
+                },
+                {
+                  "entity": "script.usbrelay5_control"
+                },
+                {
+                  "entity": "script.usbrelay6_control"
+                },
+                {
+                  "entity": "script.usbrelay7_control"
+                },
+                {
+                  "entity": "script.usbrelay8_control"
+                }
+              ],
+              "title": "Devices control",
+              "state_color": true
+            }
+          ]
+        },
+        {
+          "path": "default_view",
+          "title": "CAM",
+          "icon": "mdi:webcam",
+          "badges": [],
+          "cards": [
+            {
+              "type": "picture-entity",
+              "entity": "camera.growbox_sub"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "switch.growbox_auto_focus",
+                "switch.growbox_email_on_event",
+                "switch.growbox_ftp_upload",
+                "switch.growbox_push_notifications",
+                "switch.growbox_record",
+                "switch.growbox_record_audio",
+                "switch.growbox_siren_on_event"
+              ],
+              "title": "Interruttore"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "light.growbox_infra_red_lights_in_night_mode",
+                "light.growbox_status_led"
+              ],
+              "title": "Luce"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "number.growbox_focus",
+                "number.growbox_motion_sensitivity",
+                "number.growbox_zoom"
+              ],
+              "title": "Numero"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "button.growbox_ptz_down",
+                "button.growbox_ptz_left",
+                "button.growbox_ptz_right",
+                "button.growbox_ptz_stop",
+                "button.growbox_ptz_up"
+              ],
+              "title": "Pulsante"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "select.growbox_day_night_mode"
+              ],
+              "title": "Seleziona"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "binary_sensor.growbox_motion"
+              ],
+              "title": "Sensore binario"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "siren.growbox_siren"
+              ],
+              "title": "Sirena"
+            }
+          ]
+        },
+        {
+          "title": "System Info",
+          "path": "system-info",
+          "icon": "mdi:information",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.memory_use"
+                },
+                {
+                  "entity": "sensor.memory_use_percent"
+                },
+                {
+                  "entity": "sensor.memory_free"
+                },
+                {
+                  "entity": "sensor.load_5m"
+                },
+                {
+                  "entity": "sensor.load_15m"
+                },
+                {
+                  "entity": "sensor.last_boot"
+                },
+                {
+                  "entity": "sensor.processor_use"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
