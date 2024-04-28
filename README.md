@@ -2,21 +2,34 @@ Home Assistant as growbox controller, using several different devices and sensor
 
 ## Home Assistant setup
 
+
+### Install
 1. Install Home Assistant as container
 
-```
+```bash
 docker compose up -d
 ```
 
 If you need Docker run for RaspiOS:
 
-```
+```bash
 sudo bash utils/install-docker.sh
 ```
 
 2. Run the steps for ESPHome installation, when completed run step 3
 
 3. Install the ESPHome integration and in the "host" field, put your esp8266 ip address
+
+### Configure
+[homeassistant-configuration directory](homeassistant-configuration/configuration.yaml) contains configuration for controlling USB relay board, using [RESTful Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.rest).\
+To get it working, an API service must be started within raspbian OS and it allows you to install Home Assistant into a different host.\
+Link to the repo: [usbAPI](https://github.com/escomputers/usbAPI)\
+If you don't want to use a USB relay board, you could use a WIFI relay board like [this](https://denkovi.com/wifi-16-relay-board-modBus-tcp) and thus you can skip all the steps related to USB-API relay board management.
+
+Here's the [example scripts.yaml file](homeassistant-configuration/scripts.yaml) containing the scripts used for controlling relay board via API
+
+
+Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for dashboard setup (cards and tiles)
 
 ---
 
@@ -73,23 +86,10 @@ esphome run esphome-configuration/esphome-config.yaml
 
 ---
 
-## HOME ASSISTANT CONFIGURATION
-
-[homeassistant-configuration directory](homeassistant-configuration/configuration.yaml) contains configuration for controlling USB relay board, using [RESTful Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.rest).\
-To get it working, an API service must be started within raspbian OS and it allows you to install Home Assistant into a different host.\
-Link to the repo: [usbAPI](https://github.com/escomputers/usbAPI)
-
-Here's the [example scripts.yaml file](homeassistant-configuration/scripts.yaml) containing the scripts used for controlling relay board via API
-
-
-Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for dashboard setup (cards and tiles)
-
----
-
 ## DEVICES
 
 ### Main controller
-[D1 Mini](https://www.az-delivery.de/en/products/d1-mini) - [pinout](https://m.media-amazon.com/images/I/71b9yM7dFlL.jpg)
+[D1 Mini](https://www.az-delivery.de/en/products/d1-mini) - [pinout](https://m.media-amazon.com/images/I/71b9yM7dFlL.jpg)\
 [USB to serial converter](https://www.az-delivery.de/en/products/usb-auf-seriell-adapter-mit-ch340)
 
 ### Relay Board
