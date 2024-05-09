@@ -4,7 +4,7 @@ Home Assistant as growbox controller, using several different devices and sensor
 
 
 ### Install
-1. Install Home Assistant as container
+1. Install Home Assistant as container (for Core installation check the "core" branch out)
 
 ```bash
 docker compose up -d
