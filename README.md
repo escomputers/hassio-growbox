@@ -2,18 +2,45 @@ Home Assistant as growbox controller, using several different devices and sensor
 
 ## Home Assistant setup
 
-
 ### Install
-1. Install Home Assistant as container (for Core installation check the "core" branch out)
+1. Install Home Assistant Core
 
+  ```bash
+  # Install system requirements
+  sudo apt update && sudo apt install sudo python3 python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
+
+  # To install a specific Python version (script works only on Unix-like hosts)
+  sudo bash utils/install-python.sh 3.11.0
+
+  # Create homeassistant system account along with its own home directory
+  sudo useradd -rm homeassistant
+
+  # Create Python environment
+  sudo mkdir /srv/homeassistant
+  sudo chown homeassistant:homeassistant /srv/homeassistant
+  sudo chown -R homeassistant:homeassistant /home/homeassistant
+  sudo -u homeassistant -H -s  # change to homeassistant user
+  python -m venv /srv/homeassistant
+  source /srv/homeassistant/bin/activate
+  python -m pip install wheel
+
+  # Install HomeAssistant specific version 
+  # in this case we're installing a custom version 2023.8.3 (with twilio package updated) that requires Python 3.11
+  python -m pip install git+https://github.com/escomputers/homeassistant-core-custom.git
+
+  # Run as system service
+  sudo cp ha@homeassistant.service /etc/systemd/system/
+  sudo systemctl enable ha@homeassistant.service
+  sudo systemctl daemon-reload
+  sudo systemctl start ha@homeassistant.service
+  ```
+
+### Restore backup (optional)
+
+1. Copy the backup .tar file to the target host, uncompress it and copy it to HomeAssistant configuration directory
 ```bash
-docker compose up -d
-```
-
-If you need Docker run for RaspiOS:
-
-```bash
-sudo bash utils/install-docker.sh
+tar xf backupfile.tar && tar xf homeassistant.tar.gz
+sudo rsync -a data/ /home/homeassistant/.homeassistant/
 ```
 
 2. Run the steps for ESPHome installation, when completed run step 3
@@ -34,55 +61,36 @@ Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for das
 ---
 
 ## ESPHome installation
+1. Install ESPHome into your virtual environment
 
-1. Install Python (Linux hosts only), you can install a specific version by running:
-
-```
-sudo bash utils/install-python.sh 3.11.0
-```
-
-2. Install pip and venv
-
-```
-sudo apt-get install python3-pip python3-venv -y
-```
-
-3. Clone repository and activate virtual environment
-```
-mkdir -p env
-python -m venv env/
-```
-
-4. Install ESPHome and other requirements
-
-```
+```bash
 python -m pip -r requirements.txt
 ```
 
-5. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
+2. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
 
-6. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
+3. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
 
-7. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
+4. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
 
 ```
 mv esphome-configuration/secrets.yaml esphome-configuration/sht20.h .esphome
 ```
 
-8. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
+5. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
 your esp8266 device. Right after that, it will validate the configuration, create a binary, upload it, and start logs
 
-```
+```bash
 cd .esphome && esphome wizard esphome-config.yaml
 ```
 
 Next time you need to configure it, just connect to the same esp8266 network and launch commands over the air:
 
-```
+```bash
 esphome run esphome-configuration/esphome-config.yaml
 ```
 
-9. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
+6. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
 
 ---
 
