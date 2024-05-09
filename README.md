@@ -26,6 +26,7 @@ Home Assistant as growbox controller, using several different devices and sensor
 
   # Install HomeAssistant specific version 
   # in this case we're installing a custom version 2023.8.3 (with twilio package updated) that requires Python 3.11
+  # but you can install whatever version you want
   python -m pip install git+https://github.com/escomputers/homeassistant-core-custom.git
 
   # Run as system service
