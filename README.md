@@ -2,7 +2,6 @@ Home Assistant as growbox controller, using several different devices and sensor
 
 ## Home Assistant setup
 
-
 ### Install
 1. Install Home Assistant as container (for Core installation check the "core" branch out)
 
@@ -35,54 +34,45 @@ Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for das
 
 ## ESPHome installation
 
-1. Install Python (Linux hosts only), you can install a specific version by running:
+1. Install Python (script works on Linux hosts only), you can install a specific version by running:
 
-```
+```bash
 sudo bash utils/install-python.sh 3.11.0
 ```
 
-2. Install pip and venv
+2. Create Python virtual environment and install Esphome package
 
-```
+```bash
 sudo apt-get install python3-pip python3-venv -y
-```
-
-3. Clone repository and activate virtual environment
-```
 mkdir -p env
 python -m venv env/
-```
-
-4. Install ESPHome and other requirements
-
-```
 python -m pip -r requirements.txt
 ```
 
-5. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
+3. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
 
-6. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
+4. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
 
-7. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
+5. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
 
-```
+```bash
 mv esphome-configuration/secrets.yaml esphome-configuration/sht20.h .esphome
 ```
 
-8. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
+6. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
 your esp8266 device. Right after that, it will validate the configuration, create a binary, upload it, and start logs
 
-```
+```bash
 cd .esphome && esphome wizard esphome-config.yaml
 ```
 
 Next time you need to configure it, just connect to the same esp8266 network and launch commands over the air:
 
-```
+```bash
 esphome run esphome-configuration/esphome-config.yaml
 ```
 
-9. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
+7. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
 
 ---
 
@@ -98,6 +88,7 @@ esphome run esphome-configuration/esphome-config.yaml
 | DEVICE     | RPI4 |
 | ----------- | ---------- |
 | USB-B       | USB           |
+
 
 ### PWM Controller
 [Universal AC MAINS Dimmer - MPDMv4.1](https://www.tindie.com/products/next_evo1/universal-ac-mains-dimmer-mpdmv41/)\
