@@ -1,6 +1,6 @@
-sudo apt-get update
+sudo apt update
 
-sudo apt-get install \
+sudo apt install \
     ca-certificates \
     curl \
     gnupg
