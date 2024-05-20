@@ -17,15 +17,5 @@ cd Python-"$version"
 sudo make install
 sudo make altinstall  # set as default version from now on
 
-# Link "python" to the new installation 
-sudo ln -s /usr/local/bin/python3 /usr/bin/python
-
 # Clean up
 sudo rm /tmp/Python-"$version".tgz
-
-# Verify installation
-echo "python3 -V output:"
-python3 -V
-
-echo "python -V output:"
-python -V
