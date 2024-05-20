@@ -9,7 +9,7 @@ Home Assistant as growbox controller, using several different devices and sensor
 docker compose up -d
 ```
 
-If you need Docker run for RaspiOS:
+If you need Docker run for RaspiOS/Debian:
 
 ```bash
 sudo bash utils/install-docker.sh
