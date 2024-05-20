@@ -7,7 +7,7 @@ Home Assistant as growbox controller, using several different devices and sensor
 
   ```bash
   # Install system requirements
-  sudo apt update && sudo apt install sudo python3 python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
+  sudo apt update && sudo apt install python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
 
   # To install a specific Python version (script works only on Unix-like hosts)
   sudo bash utils/install-python.sh 3.11.0
@@ -178,4 +178,3 @@ References:
 - Arduino nano + 2 channel arduino relay + voltage stepdown box by flying_ginger on [Thingverse](https://www.thingiverse.com/thing:3162083). Used for housing ESP8266 (by making a drawer/slot manually since screw holes aren't available on the board), MH-Z19, cables and as attach surface for placing BME280 externally.
 
 ---
-
