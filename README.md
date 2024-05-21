@@ -5,36 +5,40 @@ Home Assistant as growbox controller, using several different devices and sensor
 ### Install
 1. Install Home Assistant Core
 
-  ```bash
-  # Install system requirements
-  sudo apt update && sudo apt install python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
+```bash
+# Install system requirements
+sudo apt update && sudo apt install python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
 
-  # To install a specific Python version (script works only on Unix-like hosts)
-  sudo bash utils/install-python.sh 3.11.0
+# Required only when using a MySQL database
+sudo apt-get install default-libmysqlclient-dev pkg-config -y
 
-  # Create homeassistant system account along with its own home directory
-  sudo useradd -rm homeassistant
+# Optional: install a specific Python version (script works only on Unix-like hosts)
+sudo bash utils/install-python.sh 3.11.0
 
-  # Create Python environment
-  sudo mkdir /srv/homeassistant
-  sudo chown homeassistant:homeassistant /srv/homeassistant
-  sudo chown -R homeassistant:homeassistant /home/homeassistant
-  sudo -u homeassistant -H -s  # change to homeassistant user
-  python -m venv /srv/homeassistant
-  source /srv/homeassistant/bin/activate
-  python -m pip install wheel
+# Create homeassistant system account along with its own home directory
+sudo useradd -rm homeassistant
 
-  # Install HomeAssistant specific version 
-  # in this case we're installing a custom version 2023.8.3 (with twilio package updated) that requires Python 3.11
-  # but you can install whatever version you want
-  python -m pip install git+https://github.com/escomputers/homeassistant-core-custom.git
+# Create Python environment
+sudo mkdir /srv/homeassistant
+sudo chown homeassistant:homeassistant /srv/homeassistant
+sudo chown -R homeassistant:homeassistant /home/homeassistant
+sudo -u homeassistant -H -s  # change to homeassistant user
+python -m venv /srv/homeassistant
+source /srv/homeassistant/bin/activate
+python -m pip install wheel
 
-  # Run as system service
-  sudo cp ha@homeassistant.service /etc/systemd/system/
-  sudo systemctl enable ha@homeassistant.service
-  sudo systemctl daemon-reload
-  sudo systemctl start ha@homeassistant.service
-  ```
+# Required only when using a MySQL database
+python -m pip install mysqlclient
+
+# Install HomeAssistant
+python -m pip install git+https://github.com/home-assistant/core.git
+
+# Run as system service
+sudo cp ha@homeassistant.service /etc/systemd/system/
+sudo systemctl enable ha@homeassistant.service
+sudo systemctl daemon-reload
+sudo systemctl start ha@homeassistant.service
+```
 
 ### Restore backup (optional)
 
