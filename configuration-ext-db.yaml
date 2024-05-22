@@ -2,14 +2,7 @@
 # Loads default set of integrations. Do not remove.
 default_config:
 
-# Load frontend themes from the themes folder
-# frontend:
-#   themes: !include_dir_merge_named themes
-
-# automation: !include automations.yaml
-# script: !include scripts.yaml
-# scene: !include scenes.yaml
-
 recorder:
   # Using pymsql for installations in virtual environments
   db_url: mysql+pymysql://root:password@134.209.139.189/homeassistant?charset=utf8mb4
+  #db_url: rqlite+pyrqlite://root:password@15.160.176.27:4001/
