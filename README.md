@@ -9,8 +9,8 @@ Home Assistant as growbox controller, using several different devices and sensor
 # Install system requirements
 sudo apt update && sudo apt install python3-dev python3-venv python3-pip bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libtiff6 libturbojpeg0-dev tzdata ffmpeg liblapack3 liblapack-dev libatlas-base-dev cmake -y
 
-# Required only when using a MySQL database
-sudo apt install default-libmysqlclient-dev pkg-config -y
+# Required only when using a MySQL/MariaDB database
+sudo apt install default-libmysqlclient-dev libmariadbclient-dev-compat pkg-config -y
 
 # Optional: install a specific Python version (script works only on Unix-like hosts)
 sudo bash utils/install-python.sh 3.11.0
@@ -27,8 +27,8 @@ python -m venv /srv/homeassistant
 source /srv/homeassistant/bin/activate
 python -m pip install wheel
 
-# Required only when using a MySQL database
-python -m pip install mysqlclient
+# Required only when using a MySQL/MariaDB database
+python -m pip install mysqlclient pymysql
 
 # Install HomeAssistant
 python -m pip install git+https://github.com/home-assistant/core.git
