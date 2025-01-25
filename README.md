@@ -67,44 +67,7 @@ If you don't want to use a USB relay board, you could use a WIFI relay board lik
 
 Here's the [example scripts.yaml file](homeassistant-configuration/scripts.yaml) containing the scripts used for controlling relay board via API
 
-
 Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for dashboard setup (cards and tiles)
-
----
-
-## ESPHome installation
-1. Install ESPHome into your virtual environment
-
-```bash
-python -m pip -r requirements.txt
-```
-
-2. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
-
-3. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
-
-4. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
-
-```
-mv esphome-configuration/secrets.yaml esphome-configuration/sht20.h .esphome
-```
-
-5. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
-your esp8266 device. Right after that, it will validate the configuration, create a binary, upload it, and start logs
-
-```bash
-cd .esphome && esphome wizard esphome-config.yaml
-```
-
-Next time you need to configure it, just connect to the same esp8266 network and launch commands over the air:
-
-```bash
-esphome run esphome-configuration/esphome-config.yaml
-```
-
-6. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
-
----
 
 ## DEVICES
 
@@ -164,8 +127,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | PIN5 RX     | TX/GPIO1/D10        |
 | PIN6 TX     | RX/GPIO3/D9        |
 
----
-
 ## POWER
 
 | DEVICE     | REQUIRED POWER SOURCES |
@@ -175,9 +136,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | Raspberry Pi 4                    | 5V 2A|
 | Raspberry Pi 4 Fan                | 9V 1A|
 | Power sockets                     | 220V 16A (1,5mm<sup>2</sup> cables)|
-
-
----
 
 ## 3D CASES
 
