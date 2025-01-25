@@ -51,9 +51,13 @@ tar xf backupfile.tar && tar xf homeassistant.tar.gz
 sudo rsync -a data/ /home/homeassistant/.homeassistant/
 ```
 
-2. Run the steps for ESPHome installation, when completed run step 3
+2. Connect esp8266 to your PC using USB cable (buy one with serial converter integrated) and install ESPHome Device builder:
 
-3. Install the ESPHome integration and in the "host" field, put your esp8266 ip address
+- https://esphome.io/guides/getting_started_command_line#bonus-esphome-device-builder
+- https://esphome.io/guides/getting_started_hassio.html#installing-esphome-device-builder
+
+3. Install the ESPHome integration
+
 
 ### Configure
 [homeassistant-configuration directory](homeassistant-configuration/configuration.yaml) contains configuration for controlling USB relay board, using [RESTful Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.rest).\
