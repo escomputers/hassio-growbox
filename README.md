@@ -9,15 +9,12 @@ Home Assistant as growbox controller, using several different devices and sensor
 docker compose up -d
 ```
 
-If you need Docker run for RaspiOS/Debian:
+2. Connect esp8266 to your PC using USB cable (buy one with serial converter integrated) and install ESPHome Device builder:
 
-```bash
-sudo bash utils/install-docker.sh
-```
+- https://esphome.io/guides/getting_started_command_line#bonus-esphome-device-builder
+- https://esphome.io/guides/getting_started_hassio.html#installing-esphome-device-builder
 
-2. Run the steps for ESPHome installation, when completed run step 3
-
-3. Install the ESPHome integration and in the "host" field, put your esp8266 ip address
+3. Install the ESPHome integration
 
 ### Configure
 [homeassistant-configuration directory](homeassistant-configuration/configuration.yaml) contains configuration for controlling USB relay board, using [RESTful Binary Sensor](https://www.home-assistant.io/integrations/binary_sensor.rest).\
@@ -27,54 +24,7 @@ If you don't want to use a USB relay board, you could use a WIFI relay board lik
 
 Here's the [example scripts.yaml file](homeassistant-configuration/scripts.yaml) containing the scripts used for controlling relay board via API
 
-
 Here's the [example YAML](homeassistant-configuration/.storage/lovelace) for dashboard setup (cards and tiles)
-
----
-
-## ESPHome installation
-
-1. Install Python (script works on Linux hosts only), you can install a specific version by running:
-
-```bash
-sudo bash utils/install-python.sh 3.11.0
-```
-
-2. Create Python virtual environment and install Esphome package
-
-```bash
-sudo apt-get install python3-pip python3-venv -y
-mkdir -p env
-python -m venv env/
-python -m pip -r requirements.txt
-```
-
-3. Connect esp8266 to your PC using USB cable (buy esp8266 with serial converter integrated)
-
-4. Edit esphome-configuration/secrets.yaml to reflect your current wifi network
-
-5. Move esphome-configuration/secrets.yaml and esphome-configuration/sht20.h (only if you use it, otherwise it's not required) to .esphome directory
-
-```bash
-mv esphome-configuration/secrets.yaml esphome-configuration/sht20.h .esphome
-```
-
-6. The first time you connect to esp8266 (via usb to serial cable), you need to tell esphome some information about
-your esp8266 device. Right after that, it will validate the configuration, create a binary, upload it, and start logs
-
-```bash
-cd .esphome && esphome wizard esphome-config.yaml
-```
-
-Next time you need to configure it, just connect to the same esp8266 network and launch commands over the air:
-
-```bash
-esphome run esphome-configuration/esphome-config.yaml
-```
-
-7. Read all the output and check for sensors errors, if clear come back to Home Assistant installation steps
-
----
 
 ## DEVICES
 
@@ -135,8 +85,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | PIN5 RX     | TX/GPIO1/D10        |
 | PIN6 TX     | RX/GPIO3/D9        |
 
----
-
 ## POWER
 
 | DEVICE     | REQUIRED POWER SOURCES |
@@ -147,8 +95,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | Raspberry Pi 4 Fan                | 9V 1A|
 | Power sockets                     | 220V 16A (1,5mm<sup>2</sup> cables)|
 
-
----
 
 ## 3D CASES
 
