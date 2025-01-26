@@ -1,0 +1,92 @@
+# Action to reset the resettable entity water_volume_counter_resettable
+api:
+  services:
+    - service: reset_water_volume_counter_resettable
+      then:
+        # 1) Reset "water_flow_rate" instant counter
+        - pulse_counter.set_total_pulses:
+            id: water_flow_rate
+            value: 0
+        - sensor.template.publish:
+            id: water_volume_counter_resettable
+            state: 0
+
+# A global variable that stores the "non-resettable" pulse count
+globals:
+  - id: global_pulses
+    # Using `long` ensures sufficient capacity (32 bits on ESP devices) to handle
+    # large pulse counts without overflow. It provides a safer
+    # alternative to `int`, which may vary in size across platforms
+    type: long
+    restore_value: true  # Saves the current count to flash so it is not lost on reboot
+
+# Reference: https://esphome.io/components/sensor/pulse_counter.html
+sensor:
+  # The main pulse_counter sensor for reading pulses
+  - platform: pulse_counter
+    pin:
+      number: GPIO12
+      mode:
+        input: true
+        pullup: true
+    name: "Instant Water Flow"
+    id: water_flow_rate
+    unit_of_measurement: "L/min"
+    accuracy_decimals: 2
+    update_interval: 1s
+    # Reset instant water flow value to zero after timeout
+    # timeout: 2s
+
+    # Convert pulses per second (pulses/s) to liters/minute (L/min)
+    # Formula: L/min = (pulses/s) / Calibration constant
+    filters:
+      - multiply: 1.0 / 7.413
+
+    # Create an additional resettable entity that accumulates total pulses.
+    # It applies the conversion of pulses to liters using formula: pulses / (K * 60)
+    # This sensor can be reset via the Home Assistant service: counter.reset
+    total:
+      name: "Total Water Used (Resettable)"
+      id: water_volume_counter_resettable
+      restore: true
+      unit_of_measurement: "L"
+      accuracy_decimals: 2
+      device_class: "volume"
+      state_class: "total_increasing"
+
+      # Conversion: 1 pulse = 1 / (7.413 * 60) liters
+      filters:
+        - multiply: 1.0 / (7.413 * 60.0)
+
+    # "on_pulse" increments the global variable 'global_pulses' every time a pulse is detected
+    # This allows us to track a separate, non-resettable total
+    on_pulse:
+      - lambda: |-
+          id(global_pulses) += 1;
+
+  # A template sensor that reads the global 'global_pulses' variable
+  # It then converts pulses to liters using the same formula as above
+  # This sensor is never reset 
+  # it only changes if you manually override global_pulses in the code
+  - platform: template
+    name: "Total Water Used"
+    id: water_volume_counter
+    unit_of_measurement: "L"
+    accuracy_decimals: 2
+    device_class: "volume"
+    state_class: "total_increasing"
+    lambda: |-
+      // Convert the accumulated pulses to liters: pulses / (7.413 * 60).
+      return id(global_pulses) * (1.0 / (7.413 * 60.0));
+
+# FOR INITIAL CALIBRATION ONLY
+# sensor:
+#   - platform: pulse_counter
+#     pin:
+#       number: GPIO12
+#       # Enable internal pull-up resistor for stable readings
+#       mode:
+#         input: true
+#         pullup: true
+#     id: water_usage
+#     name: 'pulses per minute'

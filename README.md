@@ -53,8 +53,9 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 ## Sensors
 [D1-MINI/ESP8266 sensors wiring](https://github.com/escomputers/hassio-growbox/blob/325ab9b5c127c14f19560fe0ca1c8efceda2f83e/wirings/d1mini-esp8266-sensors-wiring.pdf)
 
-### Air
+[Best PINs to use on ESP8266](https://espeasy.readthedocs.io/en/latest/Reference/GPIO.html#best-pins-to-use-on-esp8266)
 
+### Air
 [BME280](https://www.adafruit.com/product/2652) Temperature + Humidity + Pressure (i2c bus)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -65,7 +66,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 
 
 ### Soil
-
 [SHT20](https://www.makerfabs.com/soil-temperature-and-humidity-sensor-sht20.html) Temperature + Humidity (i2c bus)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -76,7 +76,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 
 
 ### CO2
-
 [MH-Z19C NDIR](https://www.winsen-sensor.com/product/mh-z19c.html) (UART bus - 7pin terminal connection version)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -84,6 +83,45 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | PIN3 GND    | GND        |
 | PIN5 RX     | TX/GPIO1/D10        |
 | PIN6 TX     | RX/GPIO3/D9        |
+
+
+### Water Flow meter
+[YF-S402B](https://robu.in/wp-content/uploads/2021/07/NB178.pdf) (2,25 milliliters per pulse)
+
+WARNING: it's mandatory to enable option "Allow the device to perform Home Assistant actions"
+in Settings/Devices&Services/ESPHome/configure
+
+| YF-S402B    | ESP8266    |
+| ----------- | ---------- |
+| RED         | 5V         |
+| BLACK       | GND        |
+| YELLOW      | GPIO12/D6  |
+
+<u>Calculate calibration constant</u>
+
+1. Run water through the sensor at a known flow rate (e.g., using a measuring cup and stopwatch)
+
+2. Count the pulses over time to calculate the exact flow rate frequency
+
+3. Adjust the 7.5 constant based on your observed data to improve precision
+
+For example:\
+If you collected 1.5 liters in 60 seconds:\
+Flow Rate (Q) = Liters x Time Elapsed (seconds)\
+1.5 : 1 = 1.5 L/min
+
+If the sensor generated 667 pulses in 60 seconds:\
+Frequency (Hz) = Cycles-Pulses/Time Elapsed (seconds)\
+667 : 60 = 11,12 Hz
+
+Calibration Constant (K) = Frequency (Hz) : Flow Rate (Q)\
+11,12 : 1.5 = 7.413
+
+<u>Volume calculation</u>
+
+Pulses = Frequency (Hz) × Time Elapsed (seconds)
+
+Volume (liters) = Pulses : (Calibration Constant x 60)
 
 ## POWER
 
@@ -106,4 +144,3 @@ References:
 - Arduino nano + 2 channel arduino relay + voltage stepdown box by flying_ginger on [Thingverse](https://www.thingiverse.com/thing:3162083). Used for housing ESP8266 (by making a drawer/slot manually since screw holes aren't available on the board), MH-Z19, cables and as attach surface for placing BME280 externally.
 
 ---
-
