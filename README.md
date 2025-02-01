@@ -119,8 +119,6 @@ Calibration Constant (K) = Frequency (Hz) : Flow Rate (Q)\
 
 <u>Volume calculation</u>
 
-Pulses = Frequency (Hz) × Time Elapsed (seconds)
-
 Volume (liters) = Pulses : (Calibration Constant x 60)
 
 ## POWER
