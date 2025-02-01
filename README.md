@@ -97,7 +97,7 @@ in Settings/Devices&Services/ESPHome/configure
 | BLACK       | GND        |
 | YELLOW      | GPIO12/D6  |
 
-<u>Calculate calibration constant</u>
+<ins>Calculate calibration constant</ins>
 
 1. Run water through the sensor at a known flow rate (e.g., using a measuring cup and stopwatch)
 
@@ -117,7 +117,7 @@ Frequency (Hz) = Cycles-Pulses/Time Elapsed (seconds)\
 Calibration Constant (K) = Frequency (Hz) : Flow Rate (Q)\
 11,12 : 1.5 = 7.413
 
-<u>Volume calculation</u>
+<ins>Volume calculation</ins>
 
 Volume (liters) = Pulses : (Calibration Constant x 60)
 
