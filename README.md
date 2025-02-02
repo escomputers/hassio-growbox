@@ -99,27 +99,22 @@ in Settings/Devices&Services/ESPHome/configure
 
 <ins>Calculate calibration constant</ins>
 
-1. Run water through the sensor at a known flow rate (e.g., using a measuring cup and stopwatch)
+1. Measure the quantity of water running through the sensor in a specific time interval
 
 2. Count the pulses over time to calculate the exact flow rate frequency
 
-3. Adjust the 7.5 constant based on your observed data to improve precision
+3. Adjust the 7.5 calibration constant based on observed data to improve precision
 
 For example:\
-If you collected 1.5 liters in 60 seconds:\
-Flow Rate (Q) = Liters x Time Elapsed (seconds)\
-1.5 : 1 = 1.5 L/min
+If you collected 1,6 liters in 60 seconds:\
+Flow Rate (Q) = 1,6 Liters per minute
 
-If the sensor generated 667 pulses in 60 seconds:\
-Frequency (Hz) = Cycles-Pulses/Time Elapsed (seconds)\
-667 : 60 = 11,12 Hz
+Calibration Constant (K) = Pulses/minute (P) : Flow Rate (Q)\
+1.596,35635625 = 2.554,17017 (median of all pulses measurements) : 1,6
 
-Calibration Constant (K) = Frequency (Hz) : Flow Rate (Q)\
-11,12 : 1.5 = 7.413
+Volume (L) = Pulses : K\
+1,6 = 2.554,17017 : 1.596,35635625
 
-<ins>Volume calculation</ins>
-
-Volume (liters) = Pulses : (Calibration Constant x 60)
 
 ## POWER
 
