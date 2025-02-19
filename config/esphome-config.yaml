@@ -8,21 +8,39 @@ esphome:
     - sht20.h
 
 esp8266:
-  board: esp12e
+  board: esp01_1m
+
+# A global variable that stores the "non-resettable" pulse counter
+globals:
+  - id: water_offset
+    type: float
+    restore_value: true  # persists on reboot
+    initial_value: "0.0"
 
 # Enable logging
 logger:
 
 # Enable Home Assistant API
 api:
-  password: ""
+  services:
+    - service: reset_water_counter
+      then:
+        # Set offset = raw counter
+        - lambda: id(water_offset) = id(water_volume_counter_raw).state;
+  encryption:
+    key: ""
 
 ota:
-  password: ""
+  - platform: esphome
+    password: ""
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.1.199
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -51,6 +69,53 @@ fan:
     name: "Inline Fan"
 
 sensor:
+  # Reference: https://esphome.io/components/sensor/pulse_counter.html
+  # The main pulse_counter sensor for reading pulses
+  - platform: pulse_counter
+    pin:
+      number: GPIO12
+      # Enable internal pull-up resistor for stable readings
+      mode:
+        input: true
+        pullup: true
+    #internal: true
+    icon: "mdi:water"
+    name: "Water flow rate"
+    id: water_usage_meter
+    # Interval to update the flow rate sensor data
+    update_interval: 5s
+    # update_interval: 60s  # Use this for calibration
+
+    # Calibration constant (K) = 1596.35635625 pulses per liter
+    # Pulses every 5 seconds -> L/min
+    # = pulses(5s) * (60/5) / 1596.35635625
+    # ~ pulses(5s) * 0.0075171185637956
+    filters:
+      - multiply: 0.0075171185637956
+
+    # Create a resettable entity that accumulates total pulses
+    # This sensor can be reset via the Home Assistant service: counter.reset
+    total:
+      name: "Total used water"
+      id: water_volume_counter_raw
+      unit_of_measurement: "L"
+      accuracy_decimals: 3
+      device_class: "volume"
+      state_class: "total_increasing"
+      filters:
+        # 1:1596.35635625
+        - multiply: 0.00062642654
+  - platform: template
+    name: "Total used water (resettable)"
+    id: water_volume_counter_resettable
+    unit_of_measurement: "L"
+    accuracy_decimals: 3
+    device_class: "volume"
+    state_class: "total_increasing"
+    icon: "mdi:water"
+    lambda: |-
+      // Return the difference between raw counter and offset
+      return id(water_volume_counter_raw).state - id(water_offset);
   - platform: mhz19
     co2:
       name: "CO2"

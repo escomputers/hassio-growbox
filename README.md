@@ -53,8 +53,9 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 ## Sensors
 [D1-MINI/ESP8266 sensors wiring](https://github.com/escomputers/hassio-growbox/blob/325ab9b5c127c14f19560fe0ca1c8efceda2f83e/wirings/d1mini-esp8266-sensors-wiring.pdf)
 
-### Air
+[Best PINs to use on ESP8266](https://espeasy.readthedocs.io/en/latest/Reference/GPIO.html#best-pins-to-use-on-esp8266)
 
+### Air
 [BME280](https://www.adafruit.com/product/2652) Temperature + Humidity + Pressure (i2c bus)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -65,7 +66,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 
 
 ### Soil
-
 [SHT20](https://www.makerfabs.com/soil-temperature-and-humidity-sensor-sht20.html) Temperature + Humidity (i2c bus)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -76,7 +76,6 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 
 
 ### CO2
-
 [MH-Z19C NDIR](https://www.winsen-sensor.com/product/mh-z19c.html) (UART bus - 7pin terminal connection version)
 | SENSOR      | ESP8266 |
 | ----------- | ---------- |
@@ -84,6 +83,61 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 | PIN3 GND    | GND        |
 | PIN5 RX     | TX/GPIO1/D10        |
 | PIN6 TX     | RX/GPIO3/D9        |
+
+
+### Water Flow meter
+[YF-S402B](https://robu.in/wp-content/uploads/2021/07/NB178.pdf)
+
+WARNING: enable option "Allow the device to perform Home Assistant actions" in Settings/Devices&Services/ESPHome/configure
+
+<ins>Installation</ins>
+
+- Straight Pipe Section Before and After the Sensor
+
+  - Upstream (Inlet):
+  Ensure there is a sufficient length of straight pipe (typically 10–15 times the pipe diameter) before the sensor. This helps in creating a uniform, laminar flow profile and minimizes turbulence before the water reaches the sensor.
+
+  - Downstream (Outlet):
+  Similarly, maintain a straight run after the sensor (at least 5–10 pipe diameters) if possible. This prevents any backflow or turbulent eddies from affecting the sensor’s operation.
+
+- Avoid installing the sensor in positions where gravity or buoyancy effects could cause bubbles or sediment accumulation.
+
+- Avoiding Vibrations and Mechanical Interference
+
+  - Mount the sensor securely using proper fittings to prevent vibrations. Excessive vibration can introduce noise into the measurement. Ensure that the sensor is not subjected to mechanical stress or movement, as this can affect the pulse signal.
+
+- Minimize Air Entrapment and Bubbles
+
+  - Install the sensor in a part of the piping system where air is unlikely to be trapped. Air bubbles can cause the turbine to rotate erratically, leading to inaccurate readings.
+
+- Stable Electrical Connections
+
+  - Use good quality wiring and, if possible, shielded cables to reduce electrical noise, which might cause false triggering or counting errors.
+  Enable the internal pull-up resistor to maintain a stable digital signal.
+
+| YF-S402B    | ESP8266    |
+| ----------- | ---------- |
+| RED         | 5V         |
+| BLACK       | GND        |
+| YELLOW      | GPIO12/D6  |
+
+<ins>Calculate calibration constant</ins>
+
+1. Measure the quantity of water running through the sensor in a specific time interval
+
+2. Count the pulses over time to calculate the exact flow rate frequency
+
+3. Adjust the 7.5 calibration constant based on observed data to improve precision
+
+For example:\
+If you collected 1,6 liters in 60 seconds:\
+Flow Rate (Q) = 1,6 Liters per minute
+
+Calibration Constant (K) = Pulses/minute (P) : Flow Rate (Q)\
+1.596,35635625 = 2.554,17017 (median of all pulses measurements) : 1,6
+
+Volume (L) = Pulses : K\
+1,6 = 2.554,17017 : 1.596,35635625
 
 ## POWER
 
@@ -106,4 +160,3 @@ References:
 - Arduino nano + 2 channel arduino relay + voltage stepdown box by flying_ginger on [Thingverse](https://www.thingiverse.com/thing:3162083). Used for housing ESP8266 (by making a drawer/slot manually since screw holes aren't available on the board), MH-Z19, cables and as attach surface for placing BME280 externally.
 
 ---
-
