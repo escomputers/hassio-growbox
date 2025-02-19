@@ -86,10 +86,34 @@ used for controlling 5 fans (4 oscillating + 1 inline)
 
 
 ### Water Flow meter
-[YF-S402B](https://robu.in/wp-content/uploads/2021/07/NB178.pdf) (2,25 milliliters per pulse)
+[YF-S402B](https://robu.in/wp-content/uploads/2021/07/NB178.pdf)
 
-WARNING: it's mandatory to enable option "Allow the device to perform Home Assistant actions"
-in Settings/Devices&Services/ESPHome/configure
+WARNING: enable option "Allow the device to perform Home Assistant actions" in Settings/Devices&Services/ESPHome/configure
+
+<ins>Installation</ins>
+
+- Straight Pipe Section Before and After the Sensor
+
+  - Upstream (Inlet):
+  Ensure there is a sufficient length of straight pipe (typically 10–15 times the pipe diameter) before the sensor. This helps in creating a uniform, laminar flow profile and minimizes turbulence before the water reaches the sensor.
+
+  - Downstream (Outlet):
+  Similarly, maintain a straight run after the sensor (at least 5–10 pipe diameters) if possible. This prevents any backflow or turbulent eddies from affecting the sensor’s operation.
+
+- Avoid installing the sensor in positions where gravity or buoyancy effects could cause bubbles or sediment accumulation.
+
+- Avoiding Vibrations and Mechanical Interference
+
+  - Mount the sensor securely using proper fittings to prevent vibrations. Excessive vibration can introduce noise into the measurement. Ensure that the sensor is not subjected to mechanical stress or movement, as this can affect the pulse signal.
+
+- Minimize Air Entrapment and Bubbles
+
+  - Install the sensor in a part of the piping system where air is unlikely to be trapped. Air bubbles can cause the turbine to rotate erratically, leading to inaccurate readings.
+
+- Stable Electrical Connections
+
+  - Use good quality wiring and, if possible, shielded cables to reduce electrical noise, which might cause false triggering or counting errors.
+  Enable the internal pull-up resistor to maintain a stable digital signal.
 
 | YF-S402B    | ESP8266    |
 | ----------- | ---------- |
@@ -114,7 +138,6 @@ Calibration Constant (K) = Pulses/minute (P) : Flow Rate (Q)\
 
 Volume (L) = Pulses : K\
 1,6 = 2.554,17017 : 1.596,35635625
-
 
 ## POWER
 
