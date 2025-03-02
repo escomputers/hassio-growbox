@@ -127,7 +127,7 @@ WARNING: enable option "Allow the device to perform Home Assistant actions" in S
 
 2. Count the pulses over time to calculate the exact flow rate frequency
 
-3. Adjust the 7.5 calibration constant based on observed data to improve precision
+3. Adjust the default calibration constant based on observed data to improve precision
 
 For example:\
 If you collected 1,6 liters in 60 seconds:\
