@@ -9,25 +9,12 @@ esphome:
 
 esp8266:
   board: esp01_1m
-  restore_from_flash: true  # persists on hard reboot (power-cycles)
-
-# A global variable that stores the "non-resettable" pulse counter
-globals:
-  - id: water_offset
-    type: float
-    restore_value: true  # persists on soft reboot
-    initial_value: "0.0"
 
 # Enable logging
 logger:
 
 # Enable Home Assistant API
 api:
-  services:
-    - service: reset_water_counter
-      then:
-        # Set offset = raw counter
-        - lambda: id(water_offset) = id(water_volume_counter_raw).state;
   encryption:
     key: ""
 
@@ -69,9 +56,27 @@ fan:
     output: pwm_output
     name: "Inline Fan"
 
+button:
+  - platform: template
+    name: "Reset Water Usage"
+    on_press:
+      - sensor.integration.reset: total_water_usage
+
+# References: 
+# - https://esphome.io/components/sensor/pulse_counter.html
+# - https://esphome.io/components/sensor/integration
 sensor:
-  # Reference: https://esphome.io/components/sensor/pulse_counter.html
-  # The main pulse_counter sensor for reading pulses
+  - platform: integration
+    name: "Total Water Usage"
+    sensor: water_usage_meter
+    id: total_water_usage
+    time_unit: "min"
+    unit_of_measurement: "L"
+    state_class: "total_increasing"
+    device_class: "volume"
+    accuracy_decimals: 3
+    restore: true
+
   - platform: pulse_counter
     pin:
       number: GPIO12
@@ -83,29 +88,17 @@ sensor:
     icon: "mdi:water"
     name: "Water flow rate"
     id: water_usage_meter
-    # Interval to update the flow rate sensor data
-    update_interval: 5s
-    # update_interval: 60s  # Use this for calibration
-
-    # Calibration constant (K) = 1596.35635625 pulses per liter
-    # Pulses every 5 seconds -> L/min
-    # = pulses(5s) * (60/5) / 1596.35635625
-    # ~ pulses(5s) * 0.0075171185637956
+    unit_of_measurement: "L/min"
+    state_class: "measurement"
+    device_class: "volume_flow_rate"
+    update_interval: 60s
+    accuracy_decimals: 4
     filters:
-      - multiply: 0.0075171185637956
+      # Convert pulses/min to L/min
+      # Calibration constant = 1596.35635625
+      # Each pulse corresponds to 1/1596 liters = 0.000626 L
+      - multiply: 0.000626
 
-    # Create a resettable entity that accumulates total pulses
-    # This sensor can be reset via the Home Assistant service: counter.reset
-    total:
-      name: "Total used water"
-      id: water_volume_counter_raw
-      unit_of_measurement: "L"
-      accuracy_decimals: 3
-      device_class: "volume"
-      state_class: "total_increasing"
-      filters:
-        # 1:1596.35635625
-        - multiply: 0.00062642654
   - platform: template
     name: "Total used water (resettable)"
     id: water_volume_counter_resettable
@@ -117,6 +110,7 @@ sensor:
     lambda: |-
       // Return the difference between raw counter and offset
       return id(water_volume_counter_raw).state - id(water_offset);
+  
   - platform: mhz19
     co2:
       name: "CO2"
@@ -124,6 +118,7 @@ sensor:
       name: "MH-Z19 Temperature"
     update_interval: 60s
     automatic_baseline_calibration: false
+  
   - platform: dht
     pin: GPIO4
     model: AM2302
@@ -133,6 +128,7 @@ sensor:
       name: "Air humidity"
       accuracy_decimals: 2
     update_interval: 60s
+  
   - platform: bme280
     temperature:
       name: "Air Temperature"
@@ -143,6 +139,7 @@ sensor:
       name: "Air Humidity"
     address: 0x77
     update_interval: 60s
+  
   - platform: custom
     lambda: |-
       auto sht20 = new SHT20();
